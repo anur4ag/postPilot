@@ -4,15 +4,16 @@ import SelectApp from "./SelectApp";
 import { useState, useEffect, useRef } from "react";
 import Typed from "typed.js";
 import { selector, useRecoilValue, useSetRecoilState } from "recoil";
-import { getLogin, getSignUp } from "../../Store/Getters";
+import { getLogin, getSignUp, getUserProfileDetails } from "../../Store/Getters";
 import { checkState } from "../../Store/Variables";
+import ManageProfile from "./ManageProfile";
 const Hero = () => {
  
   const el = useRef(null);
 
 const isSignUpOpen=useRecoilValue(getSignUp);
 const isLoginOpen=useRecoilValue(getLogin);
-
+const profile=useRecoilValue(getUserProfileDetails);
 const setLogin=useSetRecoilState(checkState);
   useEffect(() => {
     const typed = new Typed(el.current, {
@@ -37,9 +38,10 @@ const setLogin=useSetRecoilState(checkState);
     <div
    className="bg-[url('../src/assets/hero-bg-1.jpeg')]  pb-10 lg:mt-[-107px] pt-10 lg:pt-0 overflow-x-hidden"
       id="cta_form-03-690461">
-  
+{profile? (  <ManageProfile  />) : (null)}
 
       <div className="flex lg:flex-row flex-col items-center lg:gap-14 lg:justify-end lg:pt-44" >
+        
         <div className="text-white lg:w-[40%] px-4 lg:px-0" >
           <h1 className="text-[36px] font-[700] lg:text-[72px] leading-[54px] lg:leading-[93.6px]">
             Hight-Quality Way to Write your{" "}

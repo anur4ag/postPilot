@@ -5,7 +5,7 @@ const Demo = () => {
 
   const setLogin=useSetRecoilState(checkState);
   return (
-    <div className="bg-[url('../src/assets/service-1.jpeg')] bg-no-repeat text-white overflow-x-hidden">
+    <div className="bg-[url('../src/assets/service-1.jpeg')] bg-no-repeat text-white overflow-x-hidden" id='demo_section'>
       <div className="flex gap-20 justify-center items-center py-28" controls>
         <div>
           {/* <img src="../src/assets/service-1.svg" alt="" /> */}

@@ -91,4 +91,5 @@ module.exports = {
   getAuthorizationUrl,
   getAccessToken,
   saveCredentialsToFirebase,
+  linkedinPost
 };

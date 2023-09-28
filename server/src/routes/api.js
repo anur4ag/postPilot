@@ -2,7 +2,10 @@ const express = require("express");
 const router = express.Router();
 const db = require("../firebase");
 const admin = require("firebase-admin");
-
+const {run}=require("../controllers/postGenerator");
+const {twitterPost}=require("../controllers/twitterController");
+const {linkedinPost}=require('../controllers/linkedinController');
+const {sendMail}=require("../controllers/Nodemailer");
 const dbRef = admin.firestore().doc("twitter/token");
 
 const TwitterApi = require("twitter-api-v2").default;
@@ -29,7 +32,7 @@ router.get("/linkedin/callback", async (req, res) => {
   const { code } = req.query;
   const accessToken = await getAccessToken(code);
   await saveCredentialsToFirebase(accessToken);
-  res.redirect(`http://localhost:5173/addprojectsection`);
+  res.redirect(`http://localhost:5173/addprojectsection?method=linkedin`);
 });
 
 /*<------------- Twitter Router -------------> */
@@ -87,8 +90,35 @@ router.get("/auth/twitter/callback", async (req, res) => {
 
   // eslint-disable-next-line max-len
   const { data } = await loggedClient.v2.me(); // start using the client if you want
-  res.redirect('http://localhost:5173/addprojectsection');
+  res.redirect('http://localhost:5173/addprojectsection?method=twitter');
 
 });
+
+
+//post-generator
+
+router.post("/postGenerator/twitter", async(req, res)=>{
+  const{type, email}=req.body;
+  console.log(type);
+ try{
+  // const response= await run(type);
+  const post=await twitterPost(type);
+  console.log(post);
+  const mail=sendMail(email);
+  res.status(200);
+ }catch(e){
+  console.log(e);
+ }
+//  res.redirect("http://localhost:5173/projectsection");
+  // console.log("from api.js", response);
+  // try{
+  //   const response=await linkedinPost("hii from postPilot");
+  //   console.log(response);
+  // }catch(e){
+  //   console.log(e);
+  // }
+
+
+})
 
 module.exports = router;

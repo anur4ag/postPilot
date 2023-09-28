@@ -15,3 +15,10 @@ export const connectedCredentials=atom({
         token: null
     }
 });
+
+export const userProfileDetails=atom({
+    key: "c",
+    default: {
+        isProfile: false
+    }
+});

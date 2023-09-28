@@ -14,7 +14,8 @@ import {Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromChil
 import { connectedCredentials } from "../Store/Variables";
 import { onAuthStateChanged } from "firebase/auth";
 import DashBoard from "./components/DashBoard";
-
+import Payment from "./components/Payment";
+import Contact from "./components/Contact";
 
 
 const router=createBrowserRouter(
@@ -22,6 +23,8 @@ const router=createBrowserRouter(
     <Route element={<Nav />}>
       <Route path="/" element={<LandingPage />} />
       <Route path="/projectsection" element={<AddProjects />} />
+      <Route path="/pricing" element={<Payment />} />
+      <Route path="/contactus" element={<Contact />} />
       <Route path="/addprojectsection" element={<DashBoard />} />
     </Route>
   )
@@ -34,9 +37,9 @@ function App() {
     const listen = onAuthStateChanged(auth, async(user) => {
       if (user) { 
         const id = await auth.currentUser.getIdToken();
-        console.log(user.stsTokenManager.accessToken);
+        console.log(user.photoURL);
         setUserCredentials({
-          name: user.displayName,
+          name: user.photoURL,
           token: id
         })
         } else {

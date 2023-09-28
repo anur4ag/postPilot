@@ -1,5 +1,5 @@
 import { selector } from "recoil";
-import { checkState, connectedCredentials } from "./Variables";
+import { checkState, connectedCredentials, userProfileDetails } from "./Variables";
 
 export const getLogin=selector({
     key: "abc",
@@ -30,5 +30,13 @@ export const userToken=selector({
     get: ({get})=>{
         const check =get(connectedCredentials);
         return check.token;
+    }
+});
+
+export const getUserProfileDetails=selector({
+    key: "opq",
+    get: ({get})=>{
+        const check =get(userProfileDetails);
+        return check.isProfile;
     }
 });
