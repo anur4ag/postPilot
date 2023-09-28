@@ -33,6 +33,7 @@ const Navbar = () => {
           <Link to="/">Home</Link>
           <p>About Us</p>
           <p onClick={()=>{
+            navigate("/");
             const navbar = document.getElementById('demo_section'); // Assuming 'navbar' is the id of your navbar element
             const navbarPosition = navbar.offsetTop;
         

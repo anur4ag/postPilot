@@ -1,5 +1,20 @@
-
+import React, { useRef } from 'react';
+import emailjs from '@emailjs/browser';
 const Contact = () => {
+
+    const form = useRef();
+
+    const sendEmail = (e) => {
+      e.preventDefault();
+  
+      emailjs.sendForm('service_apy4bwr', 'template_kslcmnj', form.current, '_B9C_DxbdKRLjicNa')
+        .then((result) => {
+            console.log(result.text);
+        }, (error) => {
+            console.log(error.text);
+        });
+    };
+
     return (
       <div className="bg-[url('../src/assets/signInBg.jpeg')] text-white">
      
@@ -48,8 +63,9 @@ const Contact = () => {
           </div>
           <div>
             <form
-              action=""
+              
               className="flex flex-col gap-6 px-12 border border-white bg-[#04091E] py-10 justify-center items-center rounded-3xl"
+              ref={form} onSubmit={sendEmail}
             >
               <h1 className="pb-8 text-[32px] font-[400] leading-[28px]">
                 Get in touch with us
@@ -58,23 +74,27 @@ const Contact = () => {
                 className="bg-[#0E1327] py-4 px-5 rounded-2xl w-[30rem] text-[16px]"
                 type="text"
                 placeholder="Name"
+                name="from_name"
               />
               <input
                 className="bg-[#0E1327] py-4 px-5 rounded-2xl w-[30rem] text-[16px]"
                 type="email"
                 placeholder="Email"
+                name="user_email"
               />
               <input
                 className="bg-[#0E1327] py-4 px-5 rounded-2xl w-[30rem] text-[16px]"
                 type="text"
                 placeholder="Subject"
+                name='user_subject'
               />
               <textarea
                 className="bg-[#0E1327] py-4 px-5 rounded-2xl w-[30rem] text-[16px]"
                 type="text"
                 placeholder="message"
+                name='message'
               />
-              <button className="aai-gradient-outline-btn">SEND MESSAGE</button>
+              <button className="aai-gradient-outline-btn" type='submit'>SEND MESSAGE</button>
             </form>
           </div>
         </div>
