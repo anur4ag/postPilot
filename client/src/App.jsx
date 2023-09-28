@@ -13,6 +13,7 @@ import { auth } from "../Firebase/Firebase";
 import {Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromChildren, createRoutesFromElements} from "react-router-dom";
 import { connectedCredentials } from "../Store/Variables";
 import { onAuthStateChanged } from "firebase/auth";
+import DashBoard from "./components/DashBoard";
 
 
 
@@ -21,6 +22,7 @@ const router=createBrowserRouter(
     <Route element={<Nav />}>
       <Route path="/" element={<LandingPage />} />
       <Route path="/projectsection" element={<AddProjects />} />
+      <Route path="/addprojectsection" element={<DashBoard />} />
     </Route>
   )
 )

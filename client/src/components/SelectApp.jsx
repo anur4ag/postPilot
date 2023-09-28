@@ -4,17 +4,19 @@ import axios from "axios";
 const SelectApp = ({ setProject }) => {
   const handleLinkedinClick = () => {
     console.log("linkedin")
-    const res = axios.get("http://localhost:3000/linkedin/authorize")
-      .then((res) => { console.log(res.data) })
-      .catch((err) => { console.log(err) })
+    // const res = axios.get("http://localhost:3000/linkedin/authorize")
+    //   .then((res) => { console.log(res.data) })
+    //   .catch((err) => { console.log(err) })
+    window.location.href='http://localhost:3000/linkedin/authorize';
 
 
   }
   const handleTwitterClick = () => {
     console.log("twitter")
-    const res = axios.get("http://localhost:3000/auth/twitter")
-      .then((res) => { console.log(res.data) })
-      .catch((err) => { console.log(err) })
+    // const res = axios.get("http://localhost:3000/auth/twitter")
+    //   .then((res) => { console.log(res.data) })
+    //   .catch((err) => { console.log(err) })
+    window.location.href='http://localhost:3000/auth/twitter';
   }
   return (
     <div className="flex items-center text-center text-white absolute top-32 left-[35%] z-10">

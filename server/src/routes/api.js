@@ -29,7 +29,7 @@ router.get("/linkedin/callback", async (req, res) => {
   const { code } = req.query;
   const accessToken = await getAccessToken(code);
   await saveCredentialsToFirebase(accessToken);
-  res.redirect(`http://localhost:5173/tweet`);
+  res.redirect(`http://localhost:5173/addprojectsection`);
 });
 
 /*<------------- Twitter Router -------------> */
@@ -87,7 +87,8 @@ router.get("/auth/twitter/callback", async (req, res) => {
 
   // eslint-disable-next-line max-len
   const { data } = await loggedClient.v2.me(); // start using the client if you want
-  res.send(data);
+  res.redirect('http://localhost:5173/addprojectsection');
+
 });
 
 module.exports = router;
