@@ -1,4 +1,5 @@
 import { RxCross1 } from "react-icons/rx";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 const SelectApp = ({ setProject }) => {
@@ -7,7 +8,7 @@ const SelectApp = ({ setProject }) => {
     // const res = axios.get("http://localhost:3000/linkedin/authorize")
     //   .then((res) => { console.log(res.data) })
     //   .catch((err) => { console.log(err) })
-    window.location.href='http://localhost:3000/linkedin/authorize';
+    window.location.href = 'http://localhost:3000/linkedin/authorize';
 
 
   }
@@ -16,7 +17,7 @@ const SelectApp = ({ setProject }) => {
     // const res = axios.get("http://localhost:3000/auth/twitter")
     //   .then((res) => { console.log(res.data) })
     //   .catch((err) => { console.log(err) })
-    window.location.href='http://localhost:3000/auth/twitter';
+    window.location.href = 'http://localhost:3000/auth/twitter';
   }
   return (
     <div className="flex items-center text-center text-white absolute top-32 left-[35%] z-10">
@@ -30,10 +31,10 @@ const SelectApp = ({ setProject }) => {
           Select App
         </h1>
         <div className="py-6 border border-gray-500 rounded-3xl">
-          <button onClick={handleLinkedinClick} className="fa-brands fa-linkedin text-blue-600 text-[50px]"></button>
+          <Link to="/addprojectsection?method=linkedin"><button className="fa-brands fa-linkedin text-blue-600 text-[50px]"></button></Link>
         </div>
         <div className="py-6 border border-gray-500 rounded-3xl my-10">
-          <button onClick={handleTwitterClick} className="fa-brands fa-twitter text-blue-600 text-[50px]"></button>
+          <Link to="/addprojectsection?method=twitter"><button className="fa-brands fa-twitter text-blue-600 text-[50px]"></button></Link>
         </div>
         {/*   <div className="py-6 border border-gray-500 rounded-3xl mb-20">
           <i className="fa-brands fa-youtube text-red-600 text-[50px]"></i>

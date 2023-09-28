@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start" : "nodemon node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,6 +24,7 @@
     "passport": "^0.6.0",
     "passport-twitter": "^1.0.4",
     "puppeteer": "^21.3.5",
+    "pg": "^8.11.3",
     "twit": "^2.2.11",
     "twitter-api-v2": "^1.15.1"
   }

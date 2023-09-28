@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const db = require("../firebase");
 const admin = require("firebase-admin");
+// const client = require("../db");
+const { addUID } = require("../middleware/authMiddleware");
+const { handleUserSignup } = require("../controllers/authController");
 const {run}=require("../controllers/postGenerator");
 const {twitterPost}=require("../controllers/twitterController");
 const {linkedinPost}=require('../controllers/linkedinController');
@@ -120,5 +123,8 @@ router.post("/postGenerator/twitter", async(req, res)=>{
 
 
 })
+
+/*<------------- User Routes -------------> */
+router.post("/user/signup", addUID, handleUserSignup);
 
 module.exports = router;

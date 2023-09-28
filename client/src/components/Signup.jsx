@@ -7,46 +7,61 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { updateProfile } from "firebase/auth";
+import axios from "axios";
+
 const Signup = () => {
-const[email, setEmail]=useState(null);
-const[name, setName]=useState(null);
-const[password, setPassword]=useState(null);
-  const setLogin=useSetRecoilState(checkState);
-const navigate=useNavigate();
-  async function google(){
-    const provider= new GoogleAuthProvider();
-    try{
-      const userCredential=await signInWithPopup(auth, provider);
-      setLogin({
-        isLoginOpen: false,
-        isSignUpOpen: false
-      })
-      navigate("/projectsection")
-    }catch(e){
+  const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
+  const [password, setPassword] = useState(null);
+  const setLogin = useSetRecoilState(checkState);
+  const navigate = useNavigate();
+  async function google() {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider)
+        .then(async () => {
+          setLogin({
+            isLoginOpen: false,
+            isSignUpOpen: false
+          })
+          await auth.currentUser.getIdToken(true).then(async (idToken) => {
+            // console.log(idToken);
+            await axios.post(`http://localhost:3000/user/signup`, {
+              headers: {
+                Authorization: `Bearer ${idToken}`,
+              },
+            }).then(res => console.log(res))
+              .catch(err => console.log(err));
+          });
+          navigate("/projectsection")
+        }).catch((err) => {
+          console.log("internal server error", err)
+        })
+    } catch (e) {
       console.log(e);
     }
   }
 
-  async function signUp(event){
+  async function signUp(event) {
     event.preventDefault();
-    try{
+    try {
       const data = await createUserWithEmailAndPassword(auth, email, password);
       console.log(name);
-      const update=await updateProfile(auth.currentUser, {
+      const update = await updateProfile(auth.currentUser, {
         displayName: name
       })
-      const response=await signOut(auth);
+      const response = await signOut(auth);
       setLogin({
         isSignUpOpen: false,
         isLoginOpen: true
       })
       // send a toast telling now login to move ahead
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
   }
-  
-  
+
+
   return (
     <div className=" flex items-center text-center text-white absolute top-32 left-[35%] z-10">
       <div className=" border-2 border-white bg-[#080E26] rounded-3xl flex flex-col relative">
@@ -54,7 +69,7 @@ const navigate=useNavigate();
           <RxCross1
             className="text-[25px] text-end absolute right-5 top-4"
             onClick={() => {
-            
+
               setLogin({
                 isLoginOpen: false,
                 isSignUpOpen: false
@@ -113,10 +128,10 @@ const navigate=useNavigate();
                 name="name"
                 className="bg-[#080E26] border-2 border-white py-4 px-2 rounded-[20px]"
                 required
-                onChange={(e)=>{
+                onChange={(e) => {
                   setName(e.target.value)
                 }}
-                
+
               />
               <input
                 type="text"
@@ -132,7 +147,7 @@ const navigate=useNavigate();
                 name="email"
                 className="bg-[#080E26] border-2 border-white py-4 px-2 rounded-[20px]"
                 required
-                onChange={(e)=>{
+                onChange={(e) => {
                   setEmail(e.target.value)
                 }}
               />
@@ -142,7 +157,7 @@ const navigate=useNavigate();
                 name="password"
                 className="bg-[#080E26] border-2 border-white py-4 px-2 rounded-[20px]"
                 required
-                onChange={(e)=>{
+                onChange={(e) => {
                   setPassword(e.target.value)
                 }}
               />
@@ -153,7 +168,7 @@ const navigate=useNavigate();
           </form>
           <p className="pb-10 pt-6 text-gray-500">
             Already have an account?{" "}
-            <span className="underline underline-offset-8 text-white text-[16px] cursor-pointer hover:text-orange-400" onClick={()=>{
+            <span className="underline underline-offset-8 text-white text-[16px] cursor-pointer hover:text-orange-400" onClick={() => {
               setLogin({
                 isSignUpOpen: false,
                 isLoginOpen: true

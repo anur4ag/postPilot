@@ -10,15 +10,14 @@ import Navbar from "./components/Navbar";
 import SelectApp from "./components/SelectApp";
 import "./index.css";
 import { auth } from "../Firebase/Firebase";
-import {Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromChildren, createRoutesFromElements} from "react-router-dom";
+import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromChildren, createRoutesFromElements } from "react-router-dom";
 import { connectedCredentials } from "../Store/Variables";
 import { onAuthStateChanged } from "firebase/auth";
 import DashBoard from "./components/DashBoard";
 import Payment from "./components/Payment";
 import Contact from "./components/Contact";
 
-
-const router=createBrowserRouter(
+const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Nav />}>
       <Route path="/" element={<LandingPage />} />
@@ -32,18 +31,18 @@ const router=createBrowserRouter(
 
 
 function App() {
-  const setUserCredentials=useSetRecoilState(connectedCredentials);
+  const setUserCredentials = useSetRecoilState(connectedCredentials);
   useEffect(() => {
-    const listen = onAuthStateChanged(auth, async(user) => {
-      if (user) { 
+    const listen = onAuthStateChanged(auth, async (user) => {
+      if (user) {
         const id = await auth.currentUser.getIdToken();
-        console.log(user.photoURL);
+        // console.log(user.photoURL);
         setUserCredentials({
           name: user.photoURL,
           token: id
         })
-        } else {
-    
+      } else {
+
         setUserCredentials({
           name: null,
           token: null
@@ -75,11 +74,11 @@ function LandingPage() {
     </>
   );
 }
-function Nav(){
-  return(
+function Nav() {
+  return (
     <>
-    <Navbar />
-    <Outlet />
+      <Navbar />
+      <Outlet />
     </>
   )
 }
