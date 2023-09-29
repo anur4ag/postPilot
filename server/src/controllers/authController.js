@@ -1,5 +1,4 @@
 const client = require("../db");
-const admin = require("firebase-admin");
 
 const setUser = async (userdata) => {
   console.log(userdata);

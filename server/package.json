@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "nodemon node ./src/index.js",
+    "start": "nodemon node ./src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.37.0",
     "axios": "^1.5.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -23,8 +24,8 @@
     "openai": "^4.10.0",
     "passport": "^0.6.0",
     "passport-twitter": "^1.0.4",
-    "puppeteer": "^21.3.5",
     "pg": "^8.11.3",
+    "puppeteer": "^21.3.5",
     "twit": "^2.2.11",
     "twitter-api-v2": "^1.15.1"
   }

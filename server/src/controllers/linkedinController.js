@@ -3,9 +3,10 @@ const db = require("../firebase");
 const { link } = require("../routes/api");
 const LINKEDIN_CLIENT_ID = "77avf45xmh4igg";
 const LINKEDIN_CLIENT_SECRET = "pnQ8zxrFTLEA7Kzt";
+const superbase = require("../superbase");
 
 const getAuthorizationUrl = () => {
-  const redirectUri = encodeURI("http://localhost:3000/linkedin/callback");
+  const redirectUri = encodeURI(`http://localhost:3000/linkedin/callback`);
 
   return `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${redirectUri}&state=foobar&scope=profile%20email%20w_member_social%20openid`;
 };
@@ -32,7 +33,7 @@ const getAccessToken = async (code) => {
   return response.data.access_token;
 };
 
-const saveCredentialsToFirebase = async (accessToken) => {
+const saveCredentialsToFirebase = async (accessToken, uid) => {
   try {
     const response = await axios.get("https://api.linkedin.com/v2/userinfo", {
       headers: {
@@ -43,19 +44,29 @@ const saveCredentialsToFirebase = async (accessToken) => {
     // Handle the response here
     console.log(response.data);
     const { sub, name, email, picture } = response.data;
-    await db.ref(`users/${sub}`).set({
-      sub,
-      name,
-      email,
-      picture,
-      accessToken,
-    });
+    const { error } = await superbase
+      .from("linkedin")
+      .insert({ uid: uid, linkedinsub: sub, linkedinaccesstoken: accessToken });
+    // await db.ref(`users/${sub}`).set({
+    //   sub,
+    //   name,
+    //   email,
+    //   picture,
+    //   accessToken,
+    // });
+    console.log(error, "saving to linkedin db");
   } catch (error) {
     // Handle errors, including the one you mentioned
     console.error("Error:", error.response?.data || error.message);
   }
 };
-const linkedinPost = async (postContent) => {
+const linkedinPost = async (postContent, uid) => {
+  const {data} = await superbase
+    .from("linkedin")
+    .select("linkedinaccesstoken, linkedinsub")
+    .eq("uid", uid);
+  const accessToken = data[0].linkedinaccesstoken;
+  const profileId = data[0].linkedinsub;
   try {
     const response = await axios.post(
       "https://api.linkedin.com/v2/ugcPosts",
@@ -65,7 +76,7 @@ const linkedinPost = async (postContent) => {
         specificContent: {
           "com.linkedin.ugc.ShareContent": {
             shareCommentary: {
-              text: "testing post from api",
+              text: postContent,
             },
             shareMediaCategory: "NONE",
           },
@@ -91,5 +102,5 @@ module.exports = {
   getAuthorizationUrl,
   getAccessToken,
   saveCredentialsToFirebase,
-  linkedinPost
+  linkedinPost,
 };
