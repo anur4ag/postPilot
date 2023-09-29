@@ -6,6 +6,9 @@ import { auth } from "../../Firebase/Firebase";
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import superbase from "../superbase";
+
 const Login = () => {
   const setLogin = useSetRecoilState(checkState);
   const navigate = useNavigate();
@@ -20,15 +23,19 @@ const Login = () => {
             isLoginOpen: false,
             isSignUpOpen: false
           })
-          await auth.currentUser.getIdToken(true).then(async (idToken) => {
-            // console.log(idToken);
-            await axios.post(`http://localhost:3000/user/signup`, {
-              headers: {
-                Authorization: `Bearer ${idToken}`,
-              },
-            }).then(res => console.log(res))
-              .catch(err => console.log(err));
-          });
+          const { uid, displayName, email } = await auth.currentUser;
+          console.log(uid, displayName, email);
+          const { error } = await superbase.from('user').insert({ name: displayName, email: email, uid: uid });
+          console.error(error)
+          // await auth.currentUser.getIdToken(true).then(async (idToken) => {
+          //   // console.log(idToken);
+          //   await axios.post(`http://localhost:3000/user/signup`, {
+          //     headers: {
+          //       Authorization: `Bearer ${idToken}`,
+          //     },
+          //   }).then(res => console.log(res))
+          //     .catch(err => console.log(err));
+          // });
           navigate("/projectsection")
         }).catch((err) => {
           console.log("internal server error", err)
