@@ -2,10 +2,10 @@
 
 const Footer = () => {
   return (
-    <div className="bg-[url('../src/assets/footer-bg.jpeg')] bg-no-repeat text-white pt-44  overflow-x-hidden">
-      <div className="flex flex-col w-[70%] mx-auto">
-        <div className="flex items-center justify-evenly">
-          <div className="flex flex-col gap-6 w-[30%]">
+    <div className="bg-[url('../src/assets/footer-bg.jpeg')] text-white lg:pt-44">
+      <div className="flex flex-col lg:w-[70%] mx-auto">
+        <div className="flex lg:flex-row flex-col lg:items-center lg:px-0 px-6 lg:justify-evenly">
+          <div className="flex flex-col gap-6 lg:w-[30%]">
             <img
               src="../src/assets/PostPilot.png"
               alt=""
@@ -39,7 +39,7 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col my-10 lg:my-0 gap-5">
             <h1 className="text-[24px] font-[700] leading-[34px]">Links</h1>
             <p className="text-[16px] font-[400] leading-[24px] hover:text-orange-400">
               Home
@@ -57,7 +57,7 @@ const Footer = () => {
               Feature
             </p>
           </div>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col my-8 lg:my-0 gap-5">
             <h1 className="text-[24px] font-[700] leading-[34px]">Artworks</h1>
             <p className="text-[16px] font-[400] leading-[24px] hover:text-orange-400">
               3D Artworks
@@ -72,7 +72,7 @@ const Footer = () => {
               Intro Videos
             </p>
           </div>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col my-8 lg:my-0 gap-5">
             <h1 className="text-[24px] font-[700] leading-[34px]">Community</h1>
             <p className="text-[16px] font-[400] leading-[24px] hover:text-orange-400">
               Global Partners
@@ -91,8 +91,8 @@ const Footer = () => {
             </p>
           </div>
         </div>
-        <div className="text-center py-20">
-          <hr className=" py-2 text-gray-600" />
+        <div className="text-center lg:py-20 py-10">
+          <hr className="py-2 text-gray-600" />
           <p className="text-[18px] font-[400] leading-[28px]">
             Copyright @2023 Aai inc.
           </p>

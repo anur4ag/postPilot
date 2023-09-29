@@ -16,6 +16,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import DashBoard from "./components/DashBoard";
 import Payment from "./components/Payment";
 import Contact from "./components/Contact";
+import Error from "./components/Error";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,9 @@ const router = createBrowserRouter(
       <Route path="/pricing" element={<Payment />} />
       <Route path="/contactus" element={<Contact />} />
       <Route path="/addprojectsection" element={<DashBoard />} />
+      
+      <Route path="*" element={<Error />} />
+
     </Route>
   )
 )
