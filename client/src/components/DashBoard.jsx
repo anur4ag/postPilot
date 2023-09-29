@@ -24,6 +24,14 @@ const DashBoard = () => {
         })
         console.log("reached");
         navigate("/projectsection")
+      }else if (providerName == 'Linkedin'){
+        const response = await axios.post("http://localhost:3000/postGenerator/linkedin", {
+          type: type,
+          email: auth.currentUser.email,
+          uid: uid
+        })
+        console.log("reached");
+        navigate("/projectsection")
       } else {
         alert("linkedin spotted");
       }

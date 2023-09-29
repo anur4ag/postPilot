@@ -10,7 +10,7 @@ const SelectApp = ({ setProject }) => {
     // const res = axios.get("http://localhost:3000/linkedin/authorize")
     //   .then((res) => { console.log(res.data) })
     //   .catch((err) => { console.log(err) })
-    window.location.href = 'http://localhost:3000/linkedin/authorize';
+    window.location.href = `http://localhost:3000/linkedin/authorize?uid=${uid}`;
 
 
   }
