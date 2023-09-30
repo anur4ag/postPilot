@@ -1,11 +1,12 @@
 const puppeteer = require("puppeteer");
+const dotenv = require("dotenv").config();
 const fs = require("fs");
 
 // const { postGenerator}=require("../Outerbase Testing/gpt");
 const OpenAI = require("openai");
 
 const openai = new OpenAI({
-  apiKey: "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",
+  apiKey: process.env.OPENAI_API_KEY,
 });
 let news = [];
 async function run(link, type) {

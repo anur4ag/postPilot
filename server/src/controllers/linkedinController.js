@@ -1,19 +1,19 @@
 const axios = require("axios");
 const db = require("../firebase");
 const { link } = require("../routes/api");
-const LINKEDIN_CLIENT_ID = "77avf45xmh4igg";
-const LINKEDIN_CLIENT_SECRET = "pnQ8zxrFTLEA7Kzt";
+const dotenv = require("dotenv").config();
+
 const superbase = require("../superbase");
 const { run } = require("./postGenerator");
-const backendUrl = process.env.BACKEND_URL;
-const getAuthorizationUrl = () => {
-  const redirectUri = encodeURI(`http://localhost:3000/linkedin/callback`);
 
-  return `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${redirectUri}&state=foobar&scope=profile%20email%20w_member_social%20openid`;
+const getAuthorizationUrl = () => {
+  const redirectUri = encodeURI(`${process.env.BACKEND_URL}/linkedin/callback`);
+
+  return `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${process.env.LINKEDIN_CLIENT_ID}&redirect_uri=${redirectUri}&state=foobar&scope=profile%20email%20w_member_social%20openid`;
 };
 
 const getAccessToken = async (code) => {
-  const redirectUri = encodeURI(`${backendUrl}/linkedin/callback`);
+  const redirectUri = encodeURI(`${process.env.BACKEND_URL}/linkedin/callback`);
   const response = await axios.post(
     "https://www.linkedin.com/oauth/v2/accessToken",
     null,
@@ -21,8 +21,8 @@ const getAccessToken = async (code) => {
       params: {
         grant_type: "authorization_code",
         code,
-        client_id: "77avf45xmh4igg",
-        client_secret: "pnQ8zxrFTLEA7Kzt",
+        client_id: process.env.LINKEDIN_CLIENT_ID,
+        client_secret: process.env.LINKEDIN_CLIENT_SECRET,
         redirect_uri: redirectUri,
       },
       headers: {

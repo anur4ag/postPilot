@@ -1,8 +1,8 @@
 const express = require("express");
+const dotenv = require("dotenv").config();
 const router = express.Router();
 const db = require("../firebase");
 const admin = require("firebase-admin");
-// const client = require("../db");
 const { addUID } = require("../middleware/authMiddleware");
 const { handleUserSignup } = require("../controllers/authController");
 const { run } = require("../controllers/postGenerator");
@@ -11,13 +11,14 @@ const { linkedinPost } = require("../controllers/linkedinController");
 const { sendMail } = require("../controllers/Nodemailer");
 const dbRef = admin.firestore().doc("twitter/token");
 const superbase = require("../superbase");
+
 const frontendUrl = process.env.FRONTEND_URL;
 const backendUrl = process.env.BACKEND_URL;
 
 const TwitterApi = require("twitter-api-v2").default;
 const twitterClient = new TwitterApi({
-  clientId: "TWhWXzNIdXpLSVBHYV82bjhCTlU6MTpjaQ",
-  clientSecret: "TY5DgWm4jLZfmnkA5P722lVyxNQUn-2ebr-09phrGIfligGdK1",
+  clientId: process.env.TWITTER_CLIENT_ID,
+  clientSecret: process.env.TWITTER_CLIENT_SECRET,
 });
 const callbackURL = `${backendUrl}/auth/twitter/callback`;
 
@@ -88,14 +89,6 @@ router.get("/auth/twitter/callback", async (req, res) => {
 
   // const dbSnapshot = await dbRef.get();
   // const { codeVerifier, state: storedState } =
-  const { data, error } = await superbase
-    .from("twitter")
-    .select("state")
-    .eq("uid", uid);
-  const storedState = data[0].state;
-  if (state !== storedState) {
-    return response.status(400).send("Stored tokens do not match!");
-  }
   const {
     client: loggedClient,
     accessToken,
@@ -117,7 +110,6 @@ router.get("/auth/twitter/callback", async (req, res) => {
     uid: uid,
     job: "Twitter",
   });
-  console.log(error);
   // eslint-disable-next-line max-len
   // const { data } = await loggedClient.v2.me(); // start using the client if you want
   res.redirect(`${frontendUrl}/addprojectsection?method=twitter`);
@@ -155,6 +147,6 @@ router.post("/postGenerator/linkedin", async (req, res) => {
 });
 
 /*<------------- User Routes -------------> */
-router.post("/user/signup", addUID, handleUserSignup);
+// router.post("/user/signup", addUID, handleUserSignup);
 
 module.exports = router;
