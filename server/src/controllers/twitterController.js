@@ -2,6 +2,7 @@ const admin = require("firebase-admin");
 const superbase = require("../superbase");
 
 const db = require("../firebase");
+const { run } = require("./postGenerator");
 const dbRef = admin.firestore().doc("twitter/token");
 
 const TwitterApi = require("twitter-api-v2").default;
@@ -27,7 +28,8 @@ const twitterClient = new TwitterApi({
 //     res.send(data);
 //   });
 
-async function twitterPost(text, uid) {
+async function twitterPost(type, uid, socialMedia) {
+  const tweetText = await run(type, socialMedia);
   const { data, error } = await superbase
     .from("twitter")
     .select("twitterrefreshtoken")
@@ -50,7 +52,7 @@ async function twitterPost(text, uid) {
       })
       .eq("uid", uid);
 
-    const { data } = await refreshedClient.v2.tweet(text);
+    const { data } = await refreshedClient.v2.tweet(tweetText);
     return data;
   } catch (e) {
     console.log(e, "catch condfrom twitter controller twitterPost");

@@ -17,16 +17,19 @@ import DashBoard from "./components/DashBoard";
 import Payment from "./components/Payment";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Nav />}>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/projectsection" element={<AddProjects />} />
       <Route path="/pricing" element={<Payment />} />
       <Route path="/contactus" element={<Contact />} />
-      <Route path="/addprojectsection" element={<DashBoard />} />
-      
+      <Route element={<ProtectedRoute />}>
+        <Route path="/projectsection" element={<AddProjects />} />
+        <Route path="/addprojectsection" element={<DashBoard />} />
+      </Route>
+
       <Route path="*" element={<Error />} />
 
     </Route>
@@ -42,7 +45,7 @@ function App() {
         const id = await auth.currentUser.getIdToken();
         // console.log(user.photoURL);
         setUserCredentials({
-          name: user.photoURL,
+          name: user.email,
           token: id
         })
       } else {

@@ -11,13 +11,15 @@ const { linkedinPost } = require("../controllers/linkedinController");
 const { sendMail } = require("../controllers/Nodemailer");
 const dbRef = admin.firestore().doc("twitter/token");
 const superbase = require("../superbase");
+const frontendUrl = process.env.FRONTEND_URL;
+const backendUrl = process.env.BACKEND_URL;
 
 const TwitterApi = require("twitter-api-v2").default;
 const twitterClient = new TwitterApi({
   clientId: "TWhWXzNIdXpLSVBHYV82bjhCTlU6MTpjaQ",
   clientSecret: "TY5DgWm4jLZfmnkA5P722lVyxNQUn-2ebr-09phrGIfligGdK1",
 });
-const callbackURL = "http://localhost:3000/auth/twitter/callback";
+const callbackURL = `${backendUrl}/auth/twitter/callback`;
 
 const {
   getAuthorizationUrl,
@@ -39,7 +41,7 @@ router.get("/linkedin/callback", async (req, res) => {
   const { code } = req.query;
   const accessToken = await getAccessToken(code);
   await saveCredentialsToFirebase(accessToken, uid);
-  res.redirect(`http://localhost:5173/addprojectsection?method=linkedin`);
+  res.redirect(`${frontendUrl}/addprojectsection?method=linkedin`);
 });
 
 /*<------------- Twitter Router -------------> */
@@ -118,7 +120,7 @@ router.get("/auth/twitter/callback", async (req, res) => {
   console.log(error);
   // eslint-disable-next-line max-len
   // const { data } = await loggedClient.v2.me(); // start using the client if you want
-  res.redirect("http://localhost:5173/addprojectsection?method=twitter");
+  res.redirect(`${frontendUrl}/addprojectsection?method=twitter`);
 });
 
 //post-generator
@@ -126,44 +128,30 @@ router.get("/auth/twitter/callback", async (req, res) => {
 router.post("/postGenerator/twitter", async (req, res) => {
   const { type, email, uid } = req.body;
   console.log(type);
+  const socialMedia = "Twitter";
   try {
     // const response= await run(type);
-    const post = await twitterPost(type, uid);
+    const post = await twitterPost(type, uid, socialMedia);
     console.log(post);
-    const mail = sendMail(email);
+    const mail = sendMail(email, socialMedia);
     res.status(200);
   } catch (e) {
     console.log(e);
   }
-  //  res.redirect("http://localhost:5173/projectsection");
-  // console.log("from api.js", response);
-  // try{
-  //   const response=await linkedinPost("hii from postPilot");
-  //   console.log(response);
-  // }catch(e){
-  //   console.log(e);
-  // }
 });
 router.post("/postGenerator/linkedin", async (req, res) => {
   const { type, email, uid } = req.body;
   console.log(type);
+  const socialMedia = "Linkedin";
   try {
     // const response= await run(type);
-    const post = await linkedinPost(type, uid);
+    const post = await linkedinPost(type, uid, socialMedia);
     console.log(post);
-    const mail = sendMail(email);
+    const mail = sendMail(email, socialMedia);
     res.status(200);
   } catch (e) {
     console.log(e);
   }
-  //  res.redirect("http://localhost:5173/projectsection");
-  // console.log("from api.js", response);
-  // try{
-  //   const response=await linkedinPost("hii from postPilot");
-  //   console.log(response);
-  // }catch(e){
-  //   console.log(e);
-  // }
 });
 
 /*<------------- User Routes -------------> */

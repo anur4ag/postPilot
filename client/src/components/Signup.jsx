@@ -31,15 +31,6 @@ const Signup = () => {
           console.log(uid, displayName, email);
           const { error } = await superbase.from('user').insert({ name: displayName, email: email, uid: uid });
           console.error(error)
-          // await auth.currentUser.getIdToken(true).then(async (idToken) => {
-          //   // console.log(idToken);
-          //   await axios.post(`http://localhost:3000/user/signup`, {
-          //     headers: {
-          //       Authorization: `Bearer ${idToken}`,
-          //     },
-          //   }).then(res => console.log(res))
-          //     .catch(err => console.log(err));
-          // });
           navigate("/projectsection")
         }).catch((err) => {
           console.log("internal server error", err)
@@ -200,7 +191,7 @@ const Signup = () => {
   );
 
 
-  
+
 };
 
 export default Signup;

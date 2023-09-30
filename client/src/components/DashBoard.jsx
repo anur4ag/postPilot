@@ -3,6 +3,7 @@ import { RxCross1 } from "react-icons/rx";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { auth } from "../../Firebase/Firebase";
 import axios from "axios";
+const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 const DashBoard = () => {
 
   const [type, setType] = useState(null);
@@ -17,15 +18,15 @@ const DashBoard = () => {
       console.log(type);
       const uid = auth.currentUser.uid;
       if (providerName == 'Twitter') {
-        const response = await axios.post("http://localhost:3000/postGenerator/twitter", {
+        const response = await axios.post(`${backendUrl}/postGenerator/twitter`, {
           type: type,
           email: auth.currentUser.email,
           uid: uid
         })
         console.log("reached");
         navigate("/projectsection")
-      }else if (providerName == 'Linkedin'){
-        const response = await axios.post("http://localhost:3000/postGenerator/linkedin", {
+      } else if (providerName == 'Linkedin') {
+        const response = await axios.post(`${backendUrl}/postGenerator/linkedin`, {
           type: type,
           email: auth.currentUser.email,
           uid: uid
@@ -72,7 +73,7 @@ const DashBoard = () => {
             >
               <option value="">Select...</option>
               <option>Technology</option>
-              <option>Start Up</option>
+              <option>Startups</option>
               <option>Funding</option>
             </select>
           </div>

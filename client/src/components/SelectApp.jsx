@@ -2,24 +2,19 @@ import { RxCross1 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { auth } from "../../Firebase/Firebase";
+const backendUrl = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
 const SelectApp = ({ setProject }) => {
   const uid = auth.currentUser.uid;
   const handleLinkedinClick = () => {
     console.log("linkedin")
-    // const res = axios.get("http://localhost:3000/linkedin/authorize")
-    //   .then((res) => { console.log(res.data) })
-    //   .catch((err) => { console.log(err) })
-    window.location.href = `http://localhost:3000/linkedin/authorize?uid=${uid}`;
+    window.location.href = `${backendUrl}/linkedin/authorize?uid=${uid}`;
 
 
   }
   const handleTwitterClick = () => {
     console.log("twitter")
-    // const res = axios.get("http://localhost:3000/auth/twitter")
-    //   .then((res) => { console.log(res.data) })
-    //   .catch((err) => { console.log(err) })
-    window.location.href = `http://localhost:3000/auth/twitter?uid=${uid}`;
+    window.location.href = `${backendUrl}/auth/twitter?uid=${uid}`;
   }
 
   return (
