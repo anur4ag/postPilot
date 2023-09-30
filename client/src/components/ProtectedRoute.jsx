@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
-import { auth } from '../../Firebase/Firebase';
+import { useRecoilValue } from 'recoil';
+import { userToken } from '../../Store/Getters';
 
 function ProtectedRoute() {
-    const user = auth.currentUser
+    const token = useRecoilValue(userToken);
+    console.log(token)
 
     return (
-        user ? <Outlet /> : <Navigate to="/" />
+        token ? <Outlet /> : <Navigate to="/" />
     )
 }
 

@@ -17,7 +17,7 @@ import DashBoard from "./components/DashBoard";
 import Payment from "./components/Payment";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
-import ProtectedRoute from "./components/ProtectedRoute";
+// import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,10 +25,10 @@ const router = createBrowserRouter(
       <Route path="/" element={<LandingPage />} />
       <Route path="/pricing" element={<Payment />} />
       <Route path="/contactus" element={<Contact />} />
-      <Route element={<ProtectedRoute />}>
-        <Route path="/projectsection" element={<AddProjects />} />
-        <Route path="/addprojectsection" element={<DashBoard />} />
-      </Route>
+      {/* <Route element={<ProtectedRoute />}> */}
+      <Route path="/projectsection" element={<AddProjects />} />
+      <Route path="/addprojectsection" element={<DashBoard />} />
+      {/* </Route> */}
 
       <Route path="*" element={<Error />} />
 

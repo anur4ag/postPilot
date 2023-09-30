@@ -1,16 +1,14 @@
-const client = require("../db");
-
 const setUser = async (userdata) => {
   console.log(userdata);
   console.log("setUser function called");
   try {
     const { uid, name, email } = userdata;
     // If the user doesn't exist in Firebase, insert into your database
-    const newUser = await client.query(
-      'INSERT INTO "user" (uid, name, email) VALUES ($1, $2, $3)',
-      [uid, name, email]
-    );
-    console.log(newUser);
+    // const newUser = await client.query(
+    //   'INSERT INTO "user" (uid, name, email) VALUES ($1, $2, $3)',
+    //   [uid, name, email]
+    // );
+    console.log(userdata);
   } catch (err) {
     console.log(err);
   }

@@ -30,11 +30,11 @@ const SelectApp = ({ setProject }) => {
         <h1 className="text-[32px] lg:mx-0 mx-10 lg:text-[55px] font-[700] leading-[52px] pb-10 pt-20 lg:px-0 px-6">
           Select App
         </h1>
-        <button onClick={handleLinkedinClick}>
-          <div className="py-2 w-[50%] lg:w-full lg:py-6 border border-gray-500 rounded-xl lg:rounded-3xl">
+        <div className="py-2 w-[50%] lg:w-full lg:py-6 border border-gray-500 rounded-xl lg:rounded-3xl">
+          <button onClick={handleLinkedinClick}>
             <i className="fa-brands fa-linkedin text-blue-600 text-[22px] lg:text-[50px]"></i>
-          </div>
-        </button>
+          </button>
+        </div>
         <div className="py-3 w-[50%] lg:w-full lg:py-6 border border-gray-500 rounded-xl lg:rounded-3xl my-10">
           <button onClick={handleTwitterClick}>
             <i className="fa-brands fa-twitter text-blue-600 trxt-[22px] lg:text-[50px]"></i>
