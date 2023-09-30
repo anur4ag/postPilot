@@ -6,8 +6,7 @@ const bodyParser = require("body-parser");
 const apiRoutes = require("./routes/api");
 const cors = require("cors");
 const session = require("express-session");
-// dotenv.config();
-
+dotenv.config();
 const app = express();
 app.use(cors());
 const port = 3000;

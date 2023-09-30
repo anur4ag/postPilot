@@ -7,69 +7,83 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { updateProfile } from "firebase/auth";
+import axios from "axios";
+
+import superbase from "../superbase";
+
+
 const Signup = () => {
-const[email, setEmail]=useState(null);
-const[name, setName]=useState(null);
-const[password, setPassword]=useState(null);
-  const setLogin=useSetRecoilState(checkState);
-const navigate=useNavigate();
-  async function google(){
-    const provider= new GoogleAuthProvider();
-    try{
-      const userCredential=await signInWithPopup(auth, provider);
-      setLogin({
-        isLoginOpen: false,
-        isSignUpOpen: false
-      })
-      navigate("/projectsection")
-    }catch(e){
+  const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
+  const [password, setPassword] = useState(null);
+  const setLogin = useSetRecoilState(checkState);
+  const navigate = useNavigate();
+  async function google() {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider)
+        .then(async () => {
+          setLogin({
+            isLoginOpen: false,
+            isSignUpOpen: false
+          })
+          const { uid, displayName, email } = await auth.currentUser;
+          console.log(uid, displayName, email);
+          const { error } = await superbase.from('user').insert({ name: displayName, email: email, uid: uid });
+          console.error(error)
+          navigate("/projectsection")
+        }).catch((err) => {
+          console.log("internal server error", err)
+        })
+    } catch (e) {
       console.log(e);
     }
   }
 
-  async function signUp(event){
+  async function signUp(event) {
     event.preventDefault();
-    try{
+    try {
       const data = await createUserWithEmailAndPassword(auth, email, password);
       console.log(name);
-      const update=await updateProfile(auth.currentUser, {
+      const update = await updateProfile(auth.currentUser, {
         displayName: name
       })
-      const response=await signOut(auth);
+      const response = await signOut(auth);
       setLogin({
         isSignUpOpen: false,
         isLoginOpen: true
       })
       // send a toast telling now login to move ahead
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
   }
-  
-  
+
   return (
-    <div className=" flex items-center text-center text-white absolute top-32 left-[35%] z-10">
-      <div className=" border-2 border-white bg-[#080E26] rounded-3xl flex flex-col relative">
-        <div className="px-14">
+    <div className=" flex items-center text-center text-white absolute top-32 lg:left-[35%] z-10 px-4">
+      <div className=" border-2 border-white bg-[#080E26] rounded-3xl flex flex-col relative px-6">
+        <div className="lg:px-14">
           <RxCross1
-            className="text-[25px] text-end absolute right-5 top-4"
+            className="text-[25px] text-end absolute right-5 top-4 cursor-pointer"
             onClick={() => {
-            
               setLogin({
                 isLoginOpen: false,
-                isSignUpOpen: false
-              })
+                isSignUpOpen: false,
+              });
             }}
           />
           <div>
-            <h1 className="text-[36px] font-[600] leading-[48px] text-center text-white pt-10" >
+            <h1 className="text-[30px] lg:text-[36px] font-[600] lg:leading-[48px] text-center text-white pt-14 lg:pt-10">
               Sign up for an account
             </h1>
-            <p className="text-[18px] font-[400] leading-[27px] text-gray-400 text-center ">
+            <p className=" text-[16px] lg:text-[18px] font-[400] lg:leading-[27px] text-gray-400 text-center ">
               Send, spend and save smarter
             </p>
           </div>
-          <div className="border-2 border-gray-500 my-6 rounded-[20px] flex justify-center gap-4 items-center py-3" onClick={google}>
+          <div
+            className="border border-gray-500 my-6 rounded-[20px] flex justify-center gap-4 items-center py-3"
+            onClick={google}
+          >
             <div>
               <svg
                 width="23"
@@ -100,29 +114,32 @@ const navigate=useNavigate();
           </div>
           <div className="flex justify-center text-white">
             <hr />
-            <p className="text-[20px] font-[400] text-gray-500">
+            <p className="lg:text-[20px] font-[400] text-gray-500">
               Or with email
             </p>
             <hr />
           </div>
-          <form action="" className="flex flex-col gap-7 text-gray-500 py-6" onSubmit={signUp}>
-            <div className="flex gap-5">
+          <form
+            action=""
+            className="flex flex-col gap-7 text-gray-500 py-6"
+            onSubmit={signUp}
+          >
+            <div className="flex lg:flex-row flex-col gap-5">
               <input
                 type="text"
                 placeholder="First Name"
                 name="name"
-                className="bg-[#080E26] border-2 border-white py-4 px-2 rounded-[20px]"
+                className="bg-[#080E26] border border-white py-3 lg:py-4 px-2 rounded-2xl"
                 required
-                onChange={(e)=>{
-                  setName(e.target.value)
+                onChange={(e) => {
+                  setName(e.target.value);
                 }}
-                
               />
               <input
                 type="text"
                 placeholder="Last Name"
                 name="name"
-                className="bg-[#080E26] border-2 border-white py-4 px-2 rounded-[20px]"
+                className="bg-[#080E26] border border-white py-3 lg:py-4 px-2 rounded-2xl"
               />
             </div>
             <div className="flex flex-col gap-5">
@@ -130,35 +147,41 @@ const navigate=useNavigate();
                 type="email"
                 placeholder="Email"
                 name="email"
-                className="bg-[#080E26] border-2 border-white py-4 px-2 rounded-[20px]"
+                className="bg-[#080E26] border border-white py-3 lg:py-4 px-2 rounded-2xl"
                 required
-                onChange={(e)=>{
-                  setEmail(e.target.value)
+                onChange={(e) => {
+                  setEmail(e.target.value);
                 }}
               />
               <input
                 type="password"
                 placeholder="Password"
                 name="password"
-                className="bg-[#080E26] border-2 border-white py-4 px-2 rounded-[20px]"
+                className="bg-[#080E26] border border-white py-3 lg:py-4 px-2 rounded-2xl"
                 required
-                onChange={(e)=>{
-                  setPassword(e.target.value)
+                onChange={(e) => {
+                  setPassword(e.target.value);
                 }}
               />
             </div>
-            <button className="pt-10 aai-gradient-outline-btn text-[16px] " type="submit">
+            <button
+              className="pt-10 aai-gradient-outline-btn text-[16px] "
+              type="submit"
+            >
               Sign up
             </button>
           </form>
-          <p className="pb-10 pt-6 text-gray-500">
+          <p className="pb-10 pt-6 lg:px-0 px-6 text-gray-500">
             Already have an account?{" "}
-            <span className="underline underline-offset-8 text-white text-[16px] cursor-pointer hover:text-orange-400" onClick={()=>{
-              setLogin({
-                isSignUpOpen: false,
-                isLoginOpen: true
-              })
-            }}>
+            <span
+              className="underline underline-offset-8 text-white text-[16px] cursor-pointer hover:text-orange-400"
+              onClick={() => {
+                setLogin({
+                  isSignUpOpen: false,
+                  isLoginOpen: true,
+                });
+              }}
+            >
               Sign In
             </span>
           </p>
@@ -166,6 +189,9 @@ const navigate=useNavigate();
       </div>
     </div>
   );
+
+
+
 };
 
 export default Signup;

@@ -6,12 +6,13 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyACxidLSoYnQyEX0qw2u2cJhRb7ul4I2RA",
-  authDomain: "outerbase-cd976.firebaseapp.com",
-  projectId: "outerbase-cd976",
-  storageBucket: "outerbase-cd976.appspot.com",
-  messagingSenderId: "738792185590",
-  appId: "1:738792185590:web:7e3833397cbc06da4716d7"
+  apiKey: "AIzaSyCBB2TNA_3tNjUkcPa_lgwqe2Slhazn1hM",
+  authDomain: "postpilot-5775f.firebaseapp.com",
+  databaseURL: "https://postpilot-5775f-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "postpilot-5775f",
+  storageBucket: "postpilot-5775f.appspot.com",
+  messagingSenderId: "1062745242856",
+  appId: "1:1062745242856:web:4967b9f0934db8eaeadd5d"
 };
 
 // Initialize Firebase
