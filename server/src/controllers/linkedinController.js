@@ -48,16 +48,7 @@ const saveCredentialsToFirebase = async (accessToken, uid) => {
     const { error } = await superbase
       .from("linkedin")
       .insert({ uid: uid, linkedinsub: sub, linkedinaccesstoken: accessToken });
-    // await db.ref(`users/${sub}`).set({
-    //   sub,
-    //   name,
-    //   email,
-    //   picture,
-    //   accessToken,
-    // });
-    console.log(error, "saving to linkedin db");
   } catch (error) {
-    // Handle errors, including the one you mentioned
     console.error("Error:", error.response?.data || error.message);
   }
 };

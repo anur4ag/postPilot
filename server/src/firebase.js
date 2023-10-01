@@ -1,10 +1,10 @@
 const admin = require("firebase-admin");
 const serviceAccount = require("./serviceAccountKey.json");
+const dotenv = require("dotenv").config();
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL:
-    "https://postpilot-5775f-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL: process.env.FIREBASE_DB_URL,
 });
 
 const db = admin.database();

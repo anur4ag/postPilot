@@ -1,32 +1,15 @@
 const admin = require("firebase-admin");
 const superbase = require("../superbase");
-
+const dotenv = require("dotenv").config();
 const db = require("../firebase");
 const { run } = require("./postGenerator");
 const dbRef = admin.firestore().doc("twitter/token");
 
 const TwitterApi = require("twitter-api-v2").default;
 const twitterClient = new TwitterApi({
-  clientId: "TWhWXzNIdXpLSVBHYV82bjhCTlU6MTpjaQ",
-  clientSecret: "TY5DgWm4jLZfmnkA5P722lVyxNQUn-2ebr-09phrGIfligGdK1",
+  clientId: process.env.TWITTER_CLIENT_ID,
+  clientSecret: process.env.TWITTER_CLIENT_SECRET,
 });
-
-// router.post("/post-tweet", async (req, res) => {
-//     const { tweetText } = req.body;
-//     const { refreshToken } = (await dbRef.get()).data();
-
-//     const {
-//       client: refreshedClient,
-//       accessToken,
-//       refreshToken: newRefreshToken,
-//     } = await twitterClient.refreshOAuth2Token(refreshToken);
-
-//     await dbRef.set({ accessToken, refreshToken: newRefreshToken });
-
-//     const { data } = await refreshedClient.v2.tweet(tweetText);
-
-//     res.send(data);
-//   });
 
 async function twitterPost(type, uid, socialMedia) {
   const tweetText = await run(type, socialMedia);
@@ -52,7 +35,7 @@ async function twitterPost(type, uid, socialMedia) {
       })
       .eq("uid", uid);
 
-    const { data } = await refreshedClient.v2.tweet(tweetText);
+    const { data } = await refreshedClient.v2.tweet(type);
     return data;
   } catch (e) {
     console.log(e, "catch condfrom twitter controller twitterPost");

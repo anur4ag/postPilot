@@ -64,7 +64,7 @@ async function postGenerator(newsArray, type) {
       prompt2 += `Description: ${news.desc}\n\n`;
     });
   } else {
-    prompt2 = `You are a news reporter who is an expert in his field, using the following news, create a Twitter post that is engaging and informative.Use snarky and casual undertone but make it a detailed and thought-provoking post. Constraints : do not include pretext or context in your response, only return the twitter post.Limit to the word maximum word limit of a single tweet. Only provide  any one of the news from all news and set the economic times link for users to read the rest of news. The news is:\n\n`;
+    prompt2 = `You are a news reporter who is an expert in his field, using the following news, create a Twitter post that is engaging and informative.Use snarky and casual undertone but make it a detailed and thought-provoking post. Constraints : do not include pretext or context in your response, only return the twitter post.Limit to the word maximum word limit of a single tweet i.e 250 charecters (enforce it very seriously). Only provide  any one of the news from all news and set the economic times link for users to read the rest of news. The news is:\n\n`;
     newsArray.forEach((news) => {
       prompt2 += `Title: ${news.title}\n`;
       prompt2 += `Link: ${news.link}\n`;
