@@ -11,10 +11,6 @@
   - [Installation](#installation)
 - [License](#license)
 
-## Introduction
-
-**Digitomize** is designed to provide developers with a comprehensive platform for exploring coding contests and creating dynamic portfolios that showcase their coding skills and achievements.
-
 ## Features
 
 - **Web Scrapping** The PuppeteerJS bot extracts information from the news website you've chosen based on your "news type" preference. It then provides your audience with a list of the most recent news articles, along with their corresponding links.
