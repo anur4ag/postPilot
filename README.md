@@ -6,6 +6,7 @@
 
 - [Introduction](#introduction)
 - [Features](#features)
+- [Demo](#demo)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -16,6 +17,10 @@
 - **Web Scrapping** The PuppeteerJS bot extracts information from the news website you've chosen based on your "news type" preference. It then provides your audience with a list of the most recent news articles, along with their corresponding links.
 
 - **AI Powered Post generator:** In our application, we've seamlessly integrated GPT 3.5 turbo to generate captivating and thought-provoking posts for you. The GPT plugin intuitively identifies your chosen news category and collaborates with the PuppeteerJS scraper to deliver the freshest and most engaging content to you.
+
+## Demo
+
+https://github.com/anur4ag/postPilot/assets/71564387/eda5d3cf-9634-4c9d-95eb-e0066dec4153
 
 ## Getting Started
 
